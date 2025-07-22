@@ -1,0 +1,78 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("../Images/hall2.jpg");
+    background-repeat: no-repeat;
+    position: fi;
+    background-size: cover;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #4c6ef5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-links li {
+    display: inline-block;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+    
+    color: #ffcc00;
+}
+
+/* Main content area */
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    text-align: center;
+}
+
+.content-text {
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content-text h1 {
+    
+    font-size: 56px;
+    margin-bottom: 20px;
+    color:white;
+}
+
+

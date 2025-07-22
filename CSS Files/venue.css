@@ -1,0 +1,151 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Navbar */
+
+/* Form Container */
+.container {
+    background-color:yellow;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Header */
+h1 {
+    text-align: center;
+    color:green;
+    margin-bottom: 20px;
+}
+
+/* Form Fields */
+label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"], input[type="number"], input[type="file"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 150px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    background-color: #388e3c;
+}
+
+/* Error Messages */
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    color: yellow;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Back Button */
+.back-button {
+    background-color: #ccc;
+    color: black;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: #bbb;
+}
+
+/* Image Preview */
+.image-preview {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#imagePreview {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    label, input, textarea {
+        font-size: 0.9rem;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .image-preview {
+        margin-top: 15px;
+    }
+}

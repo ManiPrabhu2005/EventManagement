@@ -1,0 +1,183 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Main container - includes both sidebar and content */
+.container {
+    display: flex;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    color: white;
+    padding-top: 20px;
+    position: fixed;
+}
+
+.sidebar .logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar .logo h2 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.sidebar .menu {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar .menu li {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.sidebar .menu li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px 0;
+}
+
+.sidebar .menu li a:hover {
+    background-color: #575757;
+}
+
+/* Content section (main area beside the sidebar) */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Navigation bar at the top */
+nav {
+    background-color: #333;
+    padding: 10px;
+    text-align: right;
+}
+
+nav h2 a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav h2 a:hover {
+    text-decoration: underline;
+}
+
+/* Header section */
+.header {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Main content layout for the dashboard cards */
+.main-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for 2x2 layout */
+    gap: 20px; /* Space between cards */
+    margin: 20px 0;
+}
+
+/* Style for each card */
+.card {
+    background-color: #f4f4f4;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Specific card colors */
+.venues {
+    background-color: #4CAF50; /* Green */
+}
+
+.music {
+    background-color: #2196F3; /* Blue */
+}
+
+.photo {
+    background-color: #FFC107; /* Yellow */
+}
+
+.cater {
+    background-color: #FF5722; /* Orange */
+}
+
+/* Title style for the card */
+.card h2 {
+    color: white;
+    font-size: 24px;
+}
+
+/* Count number style in each card */
+.card p {
+    font-size: 36px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Responsive Design: Adjust for smaller screens */
+@media screen and (max-width: 768px) {
+    /* Stack cards in a single column on smaller screens */
+    .main-content {
+        grid-template-columns: 1fr; /* 1 column layout */
+    }
+
+    /* Make the sidebar smaller on mobile devices */
+    .sidebar {
+        width: 200px;
+    }
+
+    .content {
+        margin-left: 200px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* For very small screens, further reduce the sidebar size */
+    .sidebar {
+        width: 150px;
+    }
+
+    .content {
+        margin-left: 150px;
+    }
+
+    /* Reduce font sizes in cards */
+    .card h2 {
+        font-size: 20px;
+    }
+
+    .card p {
+        font-size: 28px;
+    }
+}

@@ -1,0 +1,430 @@
+Here are the **top five most commonly used types of melams** in South Indian cultural and religious functions:
+
+### 1. **Pandi Melam**
+   - **Instruments**: Nadaswaram, Tavil.
+   - **Characteristics**: High-energy, powerful, and festive rhythms.
+   - **Usage**: Commonly used in major temple festivals, weddings, and processions.
+   - **Why It’s Popular**: Pandi Melam is vibrant and full of life, making it a perfect fit for grand celebrations like weddings and festivals where a strong celebratory atmosphere is needed.
+
+### 2. **Thavil Melam**
+   - **Instruments**: Thavil (a large cylindrical drum).
+   - **Characteristics**: Deep, resonating beats with intricate rhythms.
+   - **Usage**: Primarily used in weddings, temple ceremonies, and processions.
+   - **Why It’s Popular**: It is a cornerstone of South Indian traditional music and is associated with auspicious occasions like weddings and rituals, creating a divine and ceremonial mood.
+
+### 3. **Parai Melam**
+   - **Instruments**: Parai (large drum).
+   - **Characteristics**: Loud, intense beats that are both rhythmic and resonant.
+   - **Usage**: Commonly used in **processions**, **housewarming (Griha Pravesh)**, and festivals.
+   - **Why It’s Popular**: Its thunderous beats are believed to drive away evil spirits and bring blessings, making it a favorite for new beginnings like moving into a new home.
+
+### 4. **Kondai Melam**
+   - **Instruments**: Nadaswaram, Thavil, Muthukkudam.
+   - **Characteristics**: A combination of both rhythm and melody, with a slightly more structured approach.
+   - **Usage**: Used in weddings, especially during rituals like **Kasi Yatra**, and in temple festivals.
+   - **Why It’s Popular**: The balanced rhythm and melody create an engaging atmosphere, which is why it is often performed during significant wedding rituals and temple events.
+
+### 5. **Chenda Melam**
+   - **Instruments**: Chenda (a cylindrical drum).
+   - **Characteristics**: Loud, energetic, and intense with complex rhythms.
+   - **Usage**: Mostly seen in Kerala during **temple festivals**, **housewarming ceremonies**, and **celebrations** like **Thrissur Pooram**.
+   - **Why It’s Popular**: It is a quintessential part of Kerala's cultural celebrations, adding a dramatic, powerful sound that marks important occasions with grandeur.
+
+---
+
+These **five melams** stand out for their **energy, significance, and versatility**, each playing a key role in religious and festive events across South India. Whether it's the intensity of **Pandi Melam** or the serenity of **Sama Melam**, each style brings a unique atmosphere that enhances the celebration and ritual.
+
+Would you like more information about any of these melams? Or how they are performed in specific events?
+============================================================================================================
+<?php
+// Initialize variables
+$image_path = '';
+$name = $email = $contact_number = $event_name = $event_date = $estimated_price = $capacity = $num_guests = $hall_name = $facilities = $description = '';
+
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "your_database"; // Change to your database name
+
+// Create a database connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if the user has already submitted the form and fetch data
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['email'])) {
+    $email = $_GET['email'];
+
+    // Fetch data from the database
+    $sql = "SELECT * FROM event_bookings WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Fetch the data and pre-fill the form
+        $row = $result->fetch_assoc();
+        $name = $row['name'];
+        $contact_number = $row['contact_number'];
+        $event_name = $row['event_name'];
+        $event_date = $row['event_date'];
+        $estimated_price = $row['estimated_price'];
+        $capacity = $row['capacity'];
+        $num_guests = $row['num_guests'];
+        $hall_name = $row['hall_name'];
+        $facilities = $row['facilities'];
+        $description = $row['description'];
+        $image_path = $row['event_image'];
+    }
+}
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $contact_number = $_POST['contact_number'];
+    $event_name = $_POST['event_name'];
+    $event_date = $_POST['event_date'];
+    $estimated_price = $_POST['estimated_price'];
+    $capacity = $_POST['capacity'];
+    $num_guests = $_POST['num_guests'];
+    $hall_name = $_POST['hall_name'];
+    $facilities = $_POST['facilities'];
+    $description = $_POST['description'];
+
+    // Handle image upload
+    if (isset($_FILES['event_image']) && $_FILES['event_image']['error'] === 0) {
+        $image = $_FILES['event_image'];
+        $image_name = $image['name'];
+        $image_tmp_name = $image['tmp_name'];
+        $image_size = $image['size'];
+        $image_error = $image['error'];
+
+        if ($image_error === 0) {
+            $image_extension = pathinfo($image_name, PATHINFO_EXTENSION);
+            $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+            if (in_array(strtolower($image_extension), $allowed_extensions)) {
+                if ($image_size <= 5000000) { // Limit image size to 5MB
+                    $new_image_name = uniqid('', true) . '.' . $image_extension;
+                    $image_upload_path = 'uploads/' . $new_image_name;
+
+                    // Move the uploaded image to the "uploads" directory
+                    if (move_uploaded_file($image_tmp_name, $image_upload_path)) {
+                        $image_path = $image_upload_path;
+                    } else {
+                        echo "<p>Error uploading image. Please try again.</p>";
+                    }
+                } else {
+                    echo "<p>Image size is too large. Maximum allowed size is 5MB.</p>";
+                }
+            } else {
+                echo "<p>Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.</p>";
+            }
+        }
+    }
+
+    // Insert or update the database with the form data
+    $sql = "INSERT INTO event_bookings (name, email, contact_number, event_name, event_date, estimated_price, capacity, num_guests, hall_name, facilities, description, event_image) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE 
+            name = VALUES(name), contact_number = VALUES(contact_number), event_name = VALUES(event_name), 
+            event_date = VALUES(event_date), estimated_price = VALUES(estimated_price), capacity = VALUES(capacity), 
+            num_guests = VALUES(num_guests), hall_name = VALUES(hall_name), facilities = VALUES(facilities), 
+            description = VALUES(description), event_image = VALUES(event_image)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssdiiisss", $name, $email, $contact_number, $event_name, $event_date, $estimated_price, $capacity, $num_guests, $hall_name, $facilities, $description, $image_path);
+    $stmt->execute();
+
+    echo "<p>Form submitted successfully!</p>";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Hall Booking Form</title>
+    <link rel="stylesheet" href="../CSS Files/viewvenue.css"> <!-- Linking to external CSS -->
+    <script>
+        // JavaScript to show image preview before submission
+        function previewImage(event) {
+            const file = event.target.files[0];  // Get the file
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = reader.result;  // Set the image preview source to the file
+                imagePreview.style.display = 'block';  // Show the image preview
+            };
+
+            // If a file is selected, read it
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Function Hall Booking Application Form</h2>
+        
+        <form action="index.php" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <legend>Personal Details</legend>
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" value="<?php echo $name; ?>" required>
+
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" value="<?php echo $email; ?>" required>
+
+                <label for="contact_number">Contact Number:</label>
+                <input type="tel" id="contact_number" name="contact_number" value="<?php echo $contact_number; ?>" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>Event Details</legend>
+                <label for="event_name">Event Name:</label>
+                <input type="text" id="event_name" name="event_name" value="<?php echo $event_name; ?>" required>
+
+                <label for="event_date">Event Date:</label>
+                <input type="date" id="event_date" name="event_date" value="<?php echo $event_date; ?>" required>
+
+                <label for="estimated_price">Estimated Price (in $):</label>
+                <input type="number" id="estimated_price" name="estimated_price" value="<?php echo $estimated_price; ?>" required>
+
+                <label for="capacity">Hall Capacity:</label>
+                <input type="number" id="capacity" name="capacity" value="<?php echo $capacity; ?>" required>
+
+                <label for="num_guests">Number of Guests:</label>
+                <input type="number" id="num_guests" name="num_guests" value="<?php echo $num_guests; ?>" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>Hall Information</legend>
+                <label for="hall_name">Hall Name/Type:</label>
+                <input type="text" id="hall_name" name="hall_name" value="<?php echo $hall_name; ?>" required>
+
+                <label for="facilities">Facilities Available:</label>
+                <textarea id="facilities" name="facilities" rows="4" required><?php echo $facilities; ?></textarea>
+
+                <label for="description">Event Description:</label>
+                <textarea id="description" name="description" rows="4" required><?php echo $description; ?></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Upload Image</legend>
+                <label for="event_image">Event Image:</label>
+                <input type="file" id="event_image" name="event_image" accept="image/*" onchange="previewImage(event)" />
+
+                <!-- Image Preview -->
+                <div>
+                    <img id="imagePreview" src="<?php echo $image_path; ?>" style="max-width: 300px; margin-top: 10px;" alt="Image Preview">
+                </div>
+            </fieldset>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+
+        <?php
+        // Display the uploaded image preview after the form is submitted
+        if ($image_path) {
+            echo "<h3>Uploaded Event Image Preview:</h3>";
+            echo "<img src='$image_path' alt='Event Image' style='max-width: 300px;'>";
+        }
+        ?>
+    </div>
+</body>
+</html>
+========================================================
+<?php
+// Start session if needed (for session-based email passing)
+session_start();
+
+include('connection.php');
+
+
+// Get the email from session or GET parameter
+// You can pass the email dynamically using session, GET, or POST
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_GET['email']) ? $_GET['email'] : '');
+
+// Fetch user data based on email
+$sql = "SELECT * FROM user_bookings";
+$stmt = $conn->prepare($sql);
+//$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Fetch the data if available
+if ($result->num_rows > 0) {
+    $user_booking = $result->fetch_assoc();
+} else {
+    // Handle the case when no data is found
+    $user_booking = null;
+}
+
+$conn->close();
+
+// Initialize image path variable for uploaded image
+$image_path = '';
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $User_name = $_POST['User_name'];
+    $email = $_POST['email'];
+    $contact_number = $_POST['contact_number'];
+    $event_name = $_POST['event_name'];
+    $event_date = $_POST['event_date'];
+    $estimated_price = $_POST['estimated_price'];
+    $capacity = $_POST['capacity'];
+    $num_guests = $_POST['num_guests'];
+    $hall_name = $_POST['hall_name'];
+    $facilities = $_POST['facilities'];
+    $description = $_POST['description'];
+
+    // Handle image upload (optional)
+    if (isset($_FILES['event_image']) && $_FILES['event_image']['error'] === 0) {
+        $image = $_FILES['event_image'];
+        $image_name = $image['name'];
+        $image_tmp_name = $image['tmp_name'];
+        $image_size = $image['size'];
+        $image_error = $image['error'];
+
+        if ($image_error === 0) {
+            $image_extension = pathinfo($image_name, PATHINFO_EXTENSION);
+            $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+            if (in_array(strtolower($image_extension), $allowed_extensions)) {
+                if ($image_size <= 5000000) { // Limit image size to 5MB
+                    $new_image_name = uniqid('', true) . '.' . $image_extension;
+                    $image_upload_path = 'uploads/' . $new_image_name;
+
+                    // Move the uploaded image to the "uploads" directory
+                    if (move_uploaded_file($image_tmp_name, $image_upload_path)) {
+                        // Set image path to be displayed after submission
+                        $image_path = $image_upload_path;
+                    } else {
+                        echo "<p>Error uploading image. Please try again.</p>";
+                    }
+                } else {
+                    echo "<p>Image size is too large. Maximum allowed size is 5MB.</p>";
+                }
+            } else {
+                echo "<p>Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.</p>";
+            }
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Hall Booking Form</title>
+    <link rel="stylesheet" href="../CSS Files/viewvenue.css"> <!-- Linking to external CSS -->
+    <script>
+        // JavaScript to show image preview before submission
+        function previewImage(event) {
+            const file = event.target.files[0];  // Get the file
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = reader.result;  // Set the image preview source to the file
+                imagePreview.style.display = 'block';  // Show the image preview
+            };
+
+            // If a file is selected, read it
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Function Hall Booking Form</h2>
+        
+        <form action="index.php" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <legend>Personal Details</legend>
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" value="<?php echo isset($user_booking['User_name']) ? $user_booking['user_name'] : ''; ?>" required>
+
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" value="<?php echo isset($user_booking['email']) ? $user_booking['email'] : ''; ?>" required>
+
+                <label for="contact_number">Contact Number:</label>
+                <input type="tel" id="contact_number" name="contact_number" value="<?php echo isset($user_booking['phone']) ? $user_booking['phone'] : ''; ?>" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>Event Details</legend>
+                <label for="event_name">Event Name:</label>
+                <input type="text" id="event_name" name="event_name" value="<?php echo isset($user_booking['event_name']) ? $user_booking['event_name'] : ''; ?>" required>
+
+                <label for="event_date">Event Date:</label>
+                <input type="date" id="event_date" name="event_date" value="<?php echo isset($user_booking['event_date']) ? $user_booking['event_date'] : ''; ?>" required>
+
+                <label for="estimated_price">Estimated Price (in $):</label>
+                <input type="number" id="estimated_price" name="estimated_price" value="<?php echo isset($user_booking['estimated_price']) ? $user_booking['estimated_price'] : ''; ?>" required>
+
+                <label for="capacity">Hall Capacity:</label>
+                <input type="number" id="capacity" name="capacity" value="<?php echo isset($user_booking['capacity']) ? $user_booking['capacity'] : ''; ?>" required>
+
+                <label for="num_guests">Number of Guests:</label>
+                <input type="number" id="num_guests" name="num_guests" value="<?php echo isset($user_booking['num_guests']) ? $user_booking['num_guests'] : ''; ?>" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>Hall Information</legend>
+                <label for="hall_name">Hall Name/Type:</label>
+                <input type="text" id="hall_name" name="hall_name" value="<?php echo isset($user_booking['hall_name']) ? $user_booking['hall_name'] : ''; ?>" required>
+
+                <label for="facilities">Facilities Available:</label>
+                <textarea id="facilities" name="facilities" rows="4" required><?php echo isset($user_booking['facilities']) ? $user_booking['facilities'] : ''; ?></textarea>
+
+                <label for="description">Event Description:</label>
+                <textarea id="description" name="description" rows="4" required><?php echo isset($user_booking['description']) ? $user_booking['description'] : ''; ?></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Upload Image</legend>
+                <label for="event_image">Event Image:</label>
+                <input type="file" id="event_image" name="event_image" accept="image/*" onchange="previewImage(event)" required>
+
+                <!-- Image Preview -->
+                <div class="image-preview-container">
+                    <img id="imagePreview" alt="Image Preview">
+                </div>
+            </fieldset>
+
+            <!-- Back and Submit buttons -->
+            <div class="button-container">
+                <button type="button" class="back-btn" onclick="window.history.back()">Back</button>
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </form>
+
+        <?php
+        // Display the uploaded image preview after the form is submitted
+        if ($image_path) {
+            echo "<h3>Uploaded Event Image Preview:</h3>";
+            echo "<img src='$image_path' alt='Event Image' style='max-width: 300px; border-radius: 8px;'>";
+        }
+        ?>
+    </div>
+</body>
+</html>
+

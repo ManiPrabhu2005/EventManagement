@@ -1,0 +1,193 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+.navbar {
+    background-color: #333;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    margin-right: 20px;
+}
+
+.navbar-links li {
+    margin-left: 20px;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar-links a:hover {
+    color: #f4f4f9;
+}
+
+.logout-btn {
+    background-color: #d9534f;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.logout-btn:hover {
+    background-color: #c9302c;
+}
+
+/* Container for main content */
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.form-container {
+    width: 48%;
+    background-color: #47d1d1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.preferences-container {
+    width: 48%;
+    background-color:#47d1d1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: black
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="checkbox"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.preferences-container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+button.submit-btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button.submit-btn:hover {
+    background-color: #45a049;
+}
+
+/* Select All Checkbox */
+#selectAll {
+    margin-bottom: 20px;
+}
+
+/* Styling for the preferences section */
+.preferences-container {
+    margin-top: 20px;
+}
+
+.preferences-container h2 {
+    font-size: 20px;
+    color:black;
+}
+
+.preferences-container label {
+    font-size: 18px;
+    color: black;
+}
+
+.preferences-container input[type="checkbox"] {
+    margin-top: 10px;
+}
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-container, .preferences-container {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Footer or any additional styles */
+footer {
+    background-color: #333;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    margin-top: 30px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #f4f4f9;
+}

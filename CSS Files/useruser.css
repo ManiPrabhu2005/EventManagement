@@ -1,0 +1,87 @@
+/* styles.css */
+
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and background */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* Navigation bar */
+nav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    background-color: #575757;
+}
+
+/* Style for the previous button */
+.nav-left {
+    margin-left: 20px;
+}
+
+.prev-btn i {
+    margin-right: 8px;
+}
+
+/* Style for the home button */
+.nav-right {
+    margin-right: 20px;
+    text-align: right;
+}
+
+.home-btn i {
+    margin-right: 8px;
+}
+
+/* Content section */
+.content {
+    padding: 20px;
+    background-color: white;
+    margin: 80px 20px 20px 20px; /* Added margin for navigation bar */
+    border-radius: 8px;
+}
+
+.content h1 {
+    color: #333;
+}
+
+.content p {
+    font-size: 18px;
+    color: #555;
+}
